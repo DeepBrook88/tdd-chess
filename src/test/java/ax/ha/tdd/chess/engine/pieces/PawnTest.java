@@ -65,4 +65,14 @@ class PawnTest {
         board.movePiece("a2-a3", Player.WHITE);
         assertEquals(new Coordinates("a2"),whitePawn.getLocation());
     }
+
+    @Test
+    void pawnCaptureDiagonally() {
+        Pawn whitePawn = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("a2"));
+        Pawn blackPawn = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("b3"));
+        board.addPiece(whitePawn);
+        board.addPiece(blackPawn);
+        board.movePiece("b3-a2", Player.BLACK);
+        assertEquals(new Coordinates("a2"),blackPawn.getLocation());
+    }
 }
