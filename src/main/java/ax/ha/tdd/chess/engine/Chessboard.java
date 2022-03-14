@@ -35,6 +35,20 @@ public class Chessboard implements Iterable<ChessPiece[]> {
         board[chessPiece.getLocation().getY()][chessPiece.getLocation().getX()] = chessPiece;
     }
 
+    public boolean movePiece(String move, Player player) {
+        String[] moves = move.split("-");
+        ChessPiece a = getPiece(new Coordinates(moves[0]));
+        if (a == null) throw new InvalidMovementException("no piece located");
+        if(!a.getPlayer().equals(player)) throw new InvalidMovementException("Cannot move other players pieces");
+        Coordinates aPos = a.getLocation();
+        if(a.move(this, new Coordinates(moves[1]))) {
+            board[aPos.getY()][aPos.getX()] = null;
+            board[a.getLocation().getY()][a.getLocation().getX()] = a;
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Helper method to initialize chessboard with {@link ChessPieceStub}.
      * Basically mirrors all added pieces for both players.
@@ -48,8 +62,14 @@ public class Chessboard implements Iterable<ChessPiece[]> {
     private Chessboard withMirroredPiece(final PieceType pieceType,
                                          final List<Integer> xCoordinates, final int yCoordinate) {
         xCoordinates.forEach(xCoordinate -> {
-            addPiece(new ChessPieceStub(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
-            addPiece(new ChessPieceStub(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+            if(pieceType.equals(PieceType.PAWN)) {
+                addPiece(new Pawn(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                addPiece(new Pawn(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+            }
+            else {
+                addPiece(new ChessPieceStub(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                addPiece(new ChessPieceStub(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+            }
         });
         return this;
     }

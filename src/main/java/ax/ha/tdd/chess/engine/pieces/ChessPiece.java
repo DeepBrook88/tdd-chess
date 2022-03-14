@@ -22,6 +22,8 @@ public abstract class ChessPiece {
 
     public abstract String getSymbol();
 
+    public abstract boolean move(final Chessboard chessboard, final Coordinates destination);
+
     public PieceType getPieceType() { return pieceType; }
 
     public Player getPlayer() {

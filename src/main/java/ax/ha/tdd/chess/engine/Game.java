@@ -6,10 +6,11 @@ public class Game {
 
     //Feel free to delete this stuff. Just for initial testing.
     boolean isNewGame = true;
+    int turn = 0;
 
     public Player getPlayerToMove() {
         //TODO this should reflect the current state.
-        return Player.WHITE;
+        return turn % 2 == 0 ? Player.WHITE : Player.BLACK;
     }
 
     public Chessboard getBoard() {
@@ -28,6 +29,8 @@ public class Game {
     public void move(String move) {
         //TODO this should trigger your move logic.
         isNewGame = false;
-        System.out.println("Player tried to perform move: " + move);
+        boolean valid = board.movePiece(move, getPlayerToMove());
+        System.out.println("Player " + getPlayerToMove().getSymbol() + " tried to perform move: " + move);
+        turn += valid ? 1 : 0;
     }
 }
