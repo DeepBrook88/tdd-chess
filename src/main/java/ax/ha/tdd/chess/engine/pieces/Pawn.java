@@ -29,9 +29,18 @@ public class Pawn extends ChessPiece{
         int direction = player.equals(Player.WHITE) ? -1 : 1;
         if (location.getY() + direction * 2 == destination.getY()
                 && !hasMoved
+                && location.getX() == destination.getX()
                 && chessboard.getPiece(destination) == null) {
             return true;
         }
-        return (location.getY() + direction == destination.getY()) && chessboard.getPiece(destination) == null;
+        else if (location.getY() + direction == destination.getY()
+                && (location.getX() + 1 == destination.getX() || location.getX() - 1 == destination.getX())
+                && chessboard.getPiece(destination) != null
+                && chessboard.getPiece(destination).getPlayer() != getPlayer()) {
+            return true;
+        }
+        else return (location.getY() + direction == destination.getY())
+                && location.getX() == destination.getX()
+                && chessboard.getPiece(destination) == null;
     }
 }
