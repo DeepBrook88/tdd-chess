@@ -1,5 +1,6 @@
 package ax.ha.tdd.chess.engine.pieces;
 
+import ax.ha.tdd.chess.console.ChessboardWriter;
 import ax.ha.tdd.chess.engine.Chessboard;
 import ax.ha.tdd.chess.engine.Coordinates;
 import ax.ha.tdd.chess.engine.Player;
@@ -53,5 +54,15 @@ class PawnTest {
         board.movePiece("c2-c1", Player.WHITE);
         board.movePiece("c2-c4", Player.WHITE);
         assertEquals(new Coordinates("c4"), whitePawn.getLocation());
+    }
+
+    @Test
+    void pawnNoCaptureForwards() {
+        Pawn whitePawn = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("a2"));
+        Pawn blackPawn = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("a3"));
+        board.addPiece(whitePawn);
+        board.addPiece(blackPawn);
+        board.movePiece("a2-a3", Player.WHITE);
+        assertEquals(new Coordinates("a2"),whitePawn.getLocation());
     }
 }
