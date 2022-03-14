@@ -26,4 +26,21 @@ class PawnTest {
         board.movePiece("a6-a7",Player.WHITE);
         assertEquals(new Coordinates("a6"),whitePawn.getLocation());
     }
+
+    @Test
+    void pawnFirstMoveTwoSpaces() {
+        Pawn whitePawn = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("a2"));
+        Pawn blackPawn = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("e7"));
+        board.addPiece(whitePawn);
+        board.addPiece(blackPawn);
+        board.movePiece("a2-a4",Player.WHITE);
+        board.movePiece("a4-a6",Player.WHITE);
+        board.movePiece("a4-a5",Player.WHITE);
+
+        board.movePiece("e7-e5",Player.BLACK);
+        board.movePiece("e5-e3",Player.BLACK);
+        board.movePiece("e5-e4",Player.BLACK);
+        assertEquals(new Coordinates("a5"),whitePawn.getLocation());
+        assertEquals(new Coordinates("e4"),blackPawn.getLocation());
+    }
 }

@@ -13,6 +13,8 @@ public abstract class ChessPiece {
 
     protected Coordinates location;
 
+    protected boolean hasMoved = false;
+
     public ChessPiece(PieceType pieceType, final Player player,
                       final Coordinates location) {
         this.pieceType = pieceType;
