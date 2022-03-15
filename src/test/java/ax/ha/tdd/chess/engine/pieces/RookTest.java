@@ -91,4 +91,12 @@ class RookTest {
         board.movePiece("c1-c5",Player.WHITE);
         assertEquals(new Coordinates("c1"),whiteRook.getLocation());
     }
+
+    @Test
+    void noXYMovement() {
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates("c1"));
+        board.addPiece(whiteRook);
+        board.movePiece("c1-d5",Player.WHITE);
+        assertEquals(new Coordinates("c1"),whiteRook.getLocation());
+    }
 }
