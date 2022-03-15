@@ -43,4 +43,17 @@ class KnightTest {
         board.movePiece("d4-e6",Player.WHITE);
         assertEquals(new Coordinates("e6"),whiteKnight.getLocation());
     }
+
+    @Test
+    void captureOnLandingSpot() {
+        Knight whiteKnight = new Knight(PieceType.KNIGHT, Player.WHITE, new Coordinates("d4"));
+        Pawn blackPawn1 = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("e6"));
+        Pawn blackPawn2 = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("d5"));
+        board.addPiece(whiteKnight);
+        board.addPiece(blackPawn1);
+        board.addPiece(blackPawn2);
+        board.movePiece("d4-e6",Player.WHITE);
+        assertEquals(new Coordinates("e6"),whiteKnight.getLocation());
+        assertNotNull(board.getPiece(new Coordinates("d5")));
+    }
 }

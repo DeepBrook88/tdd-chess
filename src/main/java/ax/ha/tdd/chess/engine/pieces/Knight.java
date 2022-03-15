@@ -31,13 +31,14 @@ public class Knight extends ChessPiece{
         int yPos = getLocation().getY();
         int destXPos = destination.getX();
         int destYPos = destination.getY();
-        return xPos + 2 == destXPos && yPos + 1 == destYPos ||
+        return (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer())
+                && (xPos + 2 == destXPos && yPos + 1 == destYPos ||
                 xPos + 2 == destXPos && yPos - 1 == destYPos ||
                 xPos + 1 == destXPos && yPos + 2 == destYPos ||
                 xPos + 1 == destXPos && yPos - 2 == destYPos ||
                 xPos - 2 == destXPos && yPos + 1 == destYPos ||
                 xPos - 2 == destXPos && yPos - 1 == destYPos ||
                 xPos - 1 == destXPos && yPos + 2 == destYPos ||
-                xPos - 1 == destXPos && yPos - 2 == destYPos;
+                xPos - 1 == destXPos && yPos - 2 == destYPos);
     }
 }
