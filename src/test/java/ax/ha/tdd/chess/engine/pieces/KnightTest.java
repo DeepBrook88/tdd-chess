@@ -31,4 +31,16 @@ class KnightTest {
         board.movePiece("d4-d6",Player.WHITE);
         assertEquals(new Coordinates("d4"),whiteKnight.getLocation());
     }
+
+    @Test
+    void jumpOverOtherPieces() {
+        Knight whiteKnight = new Knight(PieceType.KNIGHT, Player.WHITE, new Coordinates("d4"));
+        Pawn whitePawn1 = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("d5"));
+        Pawn whitePawn2 = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("e4"));
+        board.addPiece(whiteKnight);
+        board.addPiece(whitePawn1);
+        board.addPiece(whitePawn2);
+        board.movePiece("d4-e6",Player.WHITE);
+        assertEquals(new Coordinates("e6"),whiteKnight.getLocation());
+    }
 }
