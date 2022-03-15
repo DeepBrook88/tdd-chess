@@ -51,4 +51,14 @@ class RookTest {
         board.movePiece("h1-a1",Player.BLACK);
         assertEquals(new Coordinates("a1"),blackRook.getLocation());
     }
+
+    @Test
+    void collideWithPieceInPathPositiveX() {
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates("a1"));
+        Rook blackRook = new Rook(PieceType.ROOK, Player.BLACK, new Coordinates("f1"));
+        board.addPiece(whiteRook);
+        board.addPiece(blackRook);
+        board.movePiece("a1-g1",Player.WHITE);
+        assertEquals(new Coordinates("a1"),whiteRook.getLocation());
+    }
 }

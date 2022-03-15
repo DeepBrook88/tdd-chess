@@ -27,7 +27,15 @@ public class Rook extends ChessPiece{
 
     @Override
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
+        int xDirection = Integer.compare(0, getLocation().getX() - destination.getX());
+        int steps = 0;
+        if (xDirection != 0) steps = Math.abs(getLocation().getX() - destination.getX());
         boolean straightLine = getLocation().getX() == destination.getX() || getLocation().getY() == destination.getY();
+        for (int i = 1; i < steps; i++) {
+            if ( chessboard.getPiece(
+                        new Coordinates(getLocation().getX() + i * xDirection, getLocation().getY())
+            ) != null) return false;
+        }
         return straightLine && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
     }
 }
