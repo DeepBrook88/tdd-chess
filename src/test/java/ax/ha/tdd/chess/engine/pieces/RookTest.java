@@ -31,4 +31,24 @@ class RookTest {
         board.movePiece("a1-h1",Player.WHITE);
         assertEquals(new Coordinates("h1"),whiteRook.getLocation());
     }
+
+    @Test
+    void moveYAxisAndCaptureBlack() {
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates("a1"));
+        Rook blackRook = new Rook(PieceType.ROOK, Player.BLACK, new Coordinates("a8"));
+        board.addPiece(whiteRook);
+        board.addPiece(blackRook);
+        board.movePiece("a1-a8",Player.WHITE);
+        assertEquals(new Coordinates("a8"),whiteRook.getLocation());
+    }
+
+    @Test
+    void moveXAxisAndCaptureWhite() {
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates("a1"));
+        Rook blackRook = new Rook(PieceType.ROOK, Player.BLACK, new Coordinates("h1"));
+        board.addPiece(whiteRook);
+        board.addPiece(blackRook);
+        board.movePiece("h1-a1",Player.BLACK);
+        assertEquals(new Coordinates("a1"),blackRook.getLocation());
+    }
 }
