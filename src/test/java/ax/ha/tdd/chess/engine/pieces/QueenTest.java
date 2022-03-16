@@ -39,4 +39,34 @@ class QueenTest {
         board.movePiece("a1-b3",Player.WHITE);
         assertEquals(new Coordinates("a1"),whiteQueen.getLocation());
     }
+
+    @Test
+    void noCaptureOwnPiece() {
+        Queen whiteQueen = new Queen(PieceType.QUEEN, Player.WHITE, new Coordinates("c1"));
+        Pawn whitePawn = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("f4"));
+        board.addPiece(whiteQueen);
+        board.addPiece(whitePawn);
+        board.movePiece("c1-f4",Player.WHITE);
+        assertEquals(new Coordinates("c1"),whiteQueen.getLocation());
+    }
+
+    @Test
+    void captureEnemyPiece() {
+        Queen whiteQueen = new Queen(PieceType.QUEEN, Player.WHITE, new Coordinates("c1"));
+        Pawn blackPawn = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("f4"));
+        board.addPiece(whiteQueen);
+        board.addPiece(blackPawn);
+        board.movePiece("c1-f4",Player.WHITE);
+        assertEquals(new Coordinates("f4"),whiteQueen.getLocation());
+    }
+
+    @Test
+    void noJumpOverOtherPieces() {
+        Queen whiteQueen = new Queen(PieceType.QUEEN, Player.WHITE, new Coordinates("c1"));
+        Pawn whitePawn = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("e3"));
+        board.addPiece(whiteQueen);
+        board.addPiece(whitePawn);
+        board.movePiece("c1-f4",Player.WHITE);
+        assertEquals(new Coordinates("c1"),whiteQueen.getLocation());
+    }
 }
