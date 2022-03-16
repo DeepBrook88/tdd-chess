@@ -29,6 +29,13 @@ public class Bishop extends ChessPiece{
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
         int xDiff = Math.abs(getLocation().getX() - destination.getX());
         int yDiff = Math.abs(getLocation().getY() - destination.getY());
+        int xDirection = Integer.compare(0, getLocation().getX() - destination.getX());
+        int yDirection = Integer.compare(0, getLocation().getY() - destination.getY());
+        for (int i = 1; i < xDiff; i++) {
+            if ( chessboard.getPiece(
+                    new Coordinates(getLocation().getX() + i * xDirection, getLocation().getY() + i * yDirection)
+            ) != null) return false;
+        }
         return xDiff == yDiff && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
     }
 }
