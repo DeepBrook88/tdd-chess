@@ -60,4 +60,14 @@ class KingTest {
         board.movePiece("e1-e2",Player.WHITE);
         assertEquals(new Coordinates("e1"),whiteKing.getLocation());
     }
+
+    @Test
+    void noSelfCheckVsPawn() {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("e1"));
+        Pawn blackPawn = new Pawn(PieceType.PAWN, Player.BLACK, new Coordinates("f3"));
+        board.addPiece(whiteKing);
+        board.addPiece(blackPawn);
+        board.movePiece("e1-e2",Player.WHITE);
+        assertEquals(new Coordinates("e1"),whiteKing.getLocation());
+    }
 }
