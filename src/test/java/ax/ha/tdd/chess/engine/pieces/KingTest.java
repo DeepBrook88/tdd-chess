@@ -51,6 +51,7 @@ class KingTest {
         board.movePiece("e1-e2",Player.WHITE);
         assertEquals(new Coordinates("e2"),whiteKing.getLocation());
     }
+
     @Test
     void noCaptureOwnPiece() {
         King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("e1"));
@@ -69,5 +70,49 @@ class KingTest {
         board.addPiece(blackPawn);
         board.movePiece("e1-e2",Player.WHITE);
         assertEquals(new Coordinates("e1"),whiteKing.getLocation());
+    }
+
+    @Test
+    void noSelfCheckVsRook() {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("e5"));
+        Rook blackRook1 = new Rook(PieceType.ROOK, Player.BLACK, new Coordinates("h4"));
+        Rook blackRook2 = new Rook(PieceType.ROOK, Player.BLACK, new Coordinates("d1"));
+        board.addPiece(whiteKing);
+        board.addPiece(blackRook1);
+        board.addPiece(blackRook2);
+        board.movePiece("e5-d5",Player.WHITE);
+        assertEquals(new Coordinates("e5"),whiteKing.getLocation());
+        board.movePiece("e5-e4",Player.WHITE);
+        assertEquals(new Coordinates("e5"),whiteKing.getLocation());
+    }
+
+    @Test
+    void noSelfCheckVsKnight() {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("d4"));
+        Knight blackKnight = new Knight(PieceType.KNIGHT, Player.BLACK, new Coordinates("e7"));
+        board.addPiece(whiteKing);
+        board.addPiece(blackKnight);
+        board.movePiece("d4-d5",Player.WHITE);
+        assertEquals(new Coordinates("d4"),whiteKing.getLocation());
+    }
+
+    @Test
+    void noSelfCheckVsBishop() {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("d4"));
+        Bishop blackBishop = new Bishop(PieceType.BISHOP, Player.BLACK, new Coordinates("a8"));
+        board.addPiece(whiteKing);
+        board.addPiece(blackBishop);
+        board.movePiece("d4-d5",Player.WHITE);
+        assertEquals(new Coordinates("d4"),whiteKing.getLocation());
+    }
+
+    @Test
+    void noSelfCheckVsQueen() {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("d4"));
+        Queen blackQueen = new Queen(PieceType.QUEEN, Player.BLACK, new Coordinates("h1"));
+        board.addPiece(whiteKing);
+        board.addPiece(blackQueen);
+        board.movePiece("d4-d5",Player.WHITE);
+        assertEquals(new Coordinates("d4"),whiteKing.getLocation());
     }
 }

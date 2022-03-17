@@ -4,6 +4,9 @@ import ax.ha.tdd.chess.engine.Chessboard;
 import ax.ha.tdd.chess.engine.Coordinates;
 import ax.ha.tdd.chess.engine.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class King extends ChessPiece{
     public King(PieceType pieceType, Player player, Coordinates location) {
         super(pieceType, player, location);
@@ -32,6 +35,16 @@ public class King extends ChessPiece{
         if (p1 != null && p1.pieceType.equals(PieceType.PAWN) || p2 != null && p2.pieceType.equals(PieceType.PAWN)) {
             return false;
         }
+        List<ChessPiece> pieces = new ArrayList<>();
+        for (ChessPiece[] chessPieces : chessboard) {
+            for (ChessPiece chessPiece : chessPieces) {
+                if (chessPiece != null && !chessPiece.player.equals(getPlayer()) && !chessPiece.pieceType.equals(PieceType.PAWN)) pieces.add(chessPiece);
+            }
+        }
+        for (ChessPiece piece : pieces) {
+            if (piece.canMove(chessboard, destination)) return false;
+        }
+
         return (getLocation().getX() == destination.getX() && Math.abs(getLocation().getY() - destination.getY()) == 1 ||
                 Math.abs(getLocation().getX() - destination.getX()) == 1 && getLocation().getY() == destination.getY() ||
                 Math.abs(getLocation().getX() - destination.getX()) == 1 && Math.abs(getLocation().getY() - destination.getY()) == 1)
