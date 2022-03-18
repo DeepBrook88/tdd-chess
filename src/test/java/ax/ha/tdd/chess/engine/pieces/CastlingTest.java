@@ -32,4 +32,17 @@ public class CastlingTest {
         assertEquals(new Coordinates(move),whiteKing.getLocation());
         assertEquals(new Coordinates("e1"),whiteRook.getLocation());
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a1","h1"})
+    void invalidCastlingKingHasMoved(String move) {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("e1"));
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates(move));
+        board.addPiece(whiteKing);
+        board.addPiece(whiteRook);
+        whiteKing.move(board, new Coordinates("e2"));
+        whiteKing.castle(board, new Coordinates(move));
+        assertEquals(new Coordinates("e2"),whiteKing.getLocation());
+        assertEquals(new Coordinates(move),whiteRook.getLocation());
+    }
 }

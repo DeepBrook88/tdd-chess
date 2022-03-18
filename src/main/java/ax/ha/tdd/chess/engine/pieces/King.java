@@ -64,12 +64,13 @@ public class King extends ChessPiece{
         if (canCastle(chessboard, destination)) {
             chessboard.getPiece(destination).location = location;
             location = destination;
+            hasMoved = true;
             return true;
         }
         return false;
     }
 
     public boolean canCastle(Chessboard chessboard, Coordinates destination) {
-        return chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.ROOK);
+        return chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.ROOK) && !hasMoved;
     }
 }
