@@ -60,8 +60,16 @@ public class King extends ChessPiece{
                 && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
     }
 
-    public boolean castle(int direction) {
-
+    public boolean castle(Chessboard chessboard, Coordinates destination) {
+        if (canCastle(chessboard, destination)) {
+            chessboard.getPiece(destination).location = location;
+            location = destination;
+            return true;
+        }
         return false;
+    }
+
+    public boolean canCastle(Chessboard chessboard, Coordinates destination) {
+        return chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.ROOK);
     }
 }
