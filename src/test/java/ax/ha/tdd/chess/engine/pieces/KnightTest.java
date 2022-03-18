@@ -5,6 +5,8 @@ import ax.ha.tdd.chess.engine.Coordinates;
 import ax.ha.tdd.chess.engine.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,12 +18,13 @@ class KnightTest {
         board = new Chessboard();
     }
 
-    @Test
-    void validMovement() {
+    @ParameterizedTest
+    @ValueSource(strings = {"c6","e6","f5","f3","e2","c2","b3","b5"})
+    void validMovement(String move) {
         Knight whiteKnight = new Knight(PieceType.KNIGHT, Player.WHITE, new Coordinates("d4"));
         board.addPiece(whiteKnight);
-        board.movePiece("d4-e6",Player.WHITE);
-        assertEquals(new Coordinates("e6"),whiteKnight.getLocation());
+        board.movePiece("d4-"+move,Player.WHITE);
+        assertEquals(new Coordinates(move),whiteKnight.getLocation());
     }
 
     @Test
