@@ -14,7 +14,7 @@ public class King extends ChessPiece{
 
     @Override
     public String getSymbol() {
-        return player.getSymbol();
+        return pieceType.getSymbol();
     }
 
     @Override
@@ -58,5 +58,10 @@ public class King extends ChessPiece{
                 Math.abs(getLocation().getX() - destination.getX()) == 1 && getLocation().getY() == destination.getY() ||
                 Math.abs(getLocation().getX() - destination.getX()) == 1 && Math.abs(getLocation().getY() - destination.getY()) == 1)
                 && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
+    }
+
+    public boolean castle(int direction) {
+
+        return false;
     }
 }
