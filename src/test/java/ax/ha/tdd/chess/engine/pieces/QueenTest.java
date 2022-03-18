@@ -69,4 +69,14 @@ class QueenTest {
         board.movePiece("c1-f4",Player.WHITE);
         assertEquals(new Coordinates("c1"),whiteQueen.getLocation());
     }
+
+    @Test
+    void noCaptureKing() {
+        Queen whiteQueen = new Queen(PieceType.QUEEN, Player.WHITE, new Coordinates("c1"));
+        King blackKing = new King(PieceType.KING, Player.BLACK, new Coordinates("e3"));
+        board.addPiece(whiteQueen);
+        board.addPiece(blackKing);
+        board.movePiece("c1-e3",Player.WHITE);
+        assertEquals(new Coordinates("c1"),whiteQueen.getLocation());
+    }
 }

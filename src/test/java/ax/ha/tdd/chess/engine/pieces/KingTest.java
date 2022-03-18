@@ -115,4 +115,14 @@ class KingTest {
         board.movePiece("d4-d5",Player.WHITE);
         assertEquals(new Coordinates("d4"),whiteKing.getLocation());
     }
+
+    @Test
+    void noSelfCheckVsKing() {
+        King whiteKing = new King(PieceType.KING, Player.WHITE, new Coordinates("e1"));
+        King blackKing = new King(PieceType.KING, Player.BLACK, new Coordinates("f3"));
+        board.addPiece(whiteKing);
+        board.addPiece(blackKing);
+        board.movePiece("e1-e2",Player.WHITE);
+        assertEquals(new Coordinates("e1"),whiteKing.getLocation());
+    }
 }

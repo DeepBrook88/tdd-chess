@@ -41,6 +41,7 @@ public class Rook extends ChessPiece{
                     new Coordinates(getLocation().getX(), getLocation().getY() + i * yDirection)
             ) != null) return false;
         }
-        return straightLine && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
+        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
+        return straightLine && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer()) && !kingIsPresent;
     }
 }

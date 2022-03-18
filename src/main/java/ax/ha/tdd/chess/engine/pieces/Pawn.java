@@ -27,6 +27,7 @@ public class Pawn extends ChessPiece{
     @Override
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
         int direction = player.equals(Player.WHITE) ? -1 : 1;
+        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
         if (location.getY() + direction * 2 == destination.getY()
                 && !hasMoved
                 && location.getX() == destination.getX()
@@ -36,7 +37,8 @@ public class Pawn extends ChessPiece{
         else if (location.getY() + direction == destination.getY()
                 && (location.getX() + 1 == destination.getX() || location.getX() - 1 == destination.getX())
                 && chessboard.getPiece(destination) != null
-                && chessboard.getPiece(destination).getPlayer() != getPlayer()) {
+                && chessboard.getPiece(destination).getPlayer() != getPlayer()
+                && !kingIsPresent) {
             return true;
         }
         else return (location.getY() + direction == destination.getY())

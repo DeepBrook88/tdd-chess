@@ -56,4 +56,14 @@ class KnightTest {
         assertEquals(new Coordinates("e6"),whiteKnight.getLocation());
         assertNotNull(board.getPiece(new Coordinates("d5")));
     }
+
+    @Test
+    void noCaptureKing() {
+        Knight whiteBishop = new Knight(PieceType.KNIGHT, Player.WHITE, new Coordinates("c1"));
+        King blackKing = new King(PieceType.KING, Player.BLACK, new Coordinates("d3"));
+        board.addPiece(whiteBishop);
+        board.addPiece(blackKing);
+        board.movePiece("c1-d3",Player.WHITE);
+        assertEquals(new Coordinates("c1"),whiteBishop.getLocation());
+    }
 }

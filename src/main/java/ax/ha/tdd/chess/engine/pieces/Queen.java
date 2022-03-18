@@ -28,6 +28,7 @@ public class Queen extends ChessPiece{
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
         Bishop b = new Bishop(this.pieceType, this.player, this.location);
         Rook r = new Rook(this.pieceType, this.player, this.location);
-        return b.canMove(chessboard,destination) || r.canMove(chessboard,destination);
+        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
+        return (b.canMove(chessboard,destination) || r.canMove(chessboard,destination)) && !kingIsPresent;
     }
 }

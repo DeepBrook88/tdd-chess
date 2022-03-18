@@ -29,12 +29,21 @@ public class King extends ChessPiece{
 
     @Override
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
+        // Against the other King
+        int[] xOffsets = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] yOffsets = {-1, -1, -1, 0, 0, 1, 1, 1};
+        for (int i = 0; i < 8; i++) {
+            ChessPiece king = chessboard.getPiece(new Coordinates(destination.getX() + xOffsets[i],destination.getY() + yOffsets[i]));
+            if (king != null && king.pieceType.equals(PieceType.KING) && !king.player.equals(getPlayer())) return false;
+        }
+        // Against Pawns
         int pawnDirection = player.equals(Player.WHITE) ? -1 : 1;
         ChessPiece p1 = chessboard.getPiece(new Coordinates(destination.getX()-1,destination.getY()+pawnDirection));
         ChessPiece p2 = chessboard.getPiece(new Coordinates(destination.getX()+1,destination.getY()+pawnDirection));
         if (p1 != null && p1.pieceType.equals(PieceType.PAWN) || p2 != null && p2.pieceType.equals(PieceType.PAWN)) {
             return false;
         }
+        // Against all other pieces
         List<ChessPiece> pieces = new ArrayList<>();
         for (ChessPiece[] chessPieces : chessboard) {
             for (ChessPiece chessPiece : chessPieces) {

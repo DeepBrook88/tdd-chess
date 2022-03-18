@@ -75,4 +75,14 @@ class PawnTest {
         board.movePiece("b3-a2", Player.BLACK);
         assertEquals(new Coordinates("a2"),blackPawn.getLocation());
     }
+
+    @Test
+    void noCaptureKing() {
+        Pawn whitePawn = new Pawn(PieceType.PAWN, Player.WHITE, new Coordinates("c2"));
+        King blackKing = new King(PieceType.KING, Player.BLACK, new Coordinates("d3"));
+        board.addPiece(whitePawn);
+        board.addPiece(blackKing);
+        board.movePiece("c2-d3",Player.WHITE);
+        assertEquals(new Coordinates("c2"), whitePawn.getLocation());
+    }
 }

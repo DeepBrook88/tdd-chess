@@ -36,6 +36,7 @@ public class Bishop extends ChessPiece{
                     new Coordinates(getLocation().getX() + i * xDirection, getLocation().getY() + i * yDirection)
             ) != null) return false;
         }
-        return xDiff == yDiff && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
+        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
+        return xDiff == yDiff && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer()) && !kingIsPresent;
     }
 }

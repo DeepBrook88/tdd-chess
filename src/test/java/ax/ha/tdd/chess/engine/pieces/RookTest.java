@@ -99,4 +99,14 @@ class RookTest {
         board.movePiece("c1-d5",Player.WHITE);
         assertEquals(new Coordinates("c1"),whiteRook.getLocation());
     }
+
+    @Test
+    void noCaptureKing() {
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates("c1"));
+        King blackKing = new King(PieceType.KING, Player.BLACK, new Coordinates("c3"));
+        board.addPiece(whiteRook);
+        board.addPiece(blackKing);
+        board.movePiece("c1-c3",Player.WHITE);
+        assertEquals(new Coordinates("c1"),whiteRook.getLocation());
+    }
 }
