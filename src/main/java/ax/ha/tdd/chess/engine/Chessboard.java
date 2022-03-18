@@ -1,9 +1,6 @@
 package ax.ha.tdd.chess.engine;
 
-import ax.ha.tdd.chess.engine.pieces.ChessPiece;
-import ax.ha.tdd.chess.engine.pieces.ChessPieceStub;
-import ax.ha.tdd.chess.engine.pieces.Pawn;
-import ax.ha.tdd.chess.engine.pieces.PieceType;
+import ax.ha.tdd.chess.engine.pieces.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -62,13 +59,31 @@ public class Chessboard implements Iterable<ChessPiece[]> {
     private Chessboard withMirroredPiece(final PieceType pieceType,
                                          final List<Integer> xCoordinates, final int yCoordinate) {
         xCoordinates.forEach(xCoordinate -> {
-            if(pieceType.equals(PieceType.PAWN)) {
-                addPiece(new Pawn(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
-                addPiece(new Pawn(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
-            }
-            else {
-                addPiece(new ChessPieceStub(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
-                addPiece(new ChessPieceStub(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+            switch (pieceType) {
+                case PAWN -> {
+                    addPiece(new Pawn(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                    addPiece(new Pawn(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+                }
+                case ROOK -> {
+                    addPiece(new Rook(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                    addPiece(new Rook(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+                }
+                case KNIGHT -> {
+                    addPiece(new Knight(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                    addPiece(new Knight(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+                }
+                case BISHOP -> {
+                    addPiece(new Bishop(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                    addPiece(new Bishop(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+                }
+                case QUEEN -> {
+                    addPiece(new Queen(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                    addPiece(new Queen(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+                }
+                case KING -> {
+                    addPiece(new King(pieceType, Player.BLACK, new Coordinates(xCoordinate, yCoordinate)));
+                    addPiece(new King(pieceType, Player.WHITE, new Coordinates(xCoordinate, 7 - yCoordinate)));
+                }
             }
         });
         return this;
