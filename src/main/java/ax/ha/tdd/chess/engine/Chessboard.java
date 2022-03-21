@@ -33,15 +33,25 @@ public class Chessboard implements Iterable<ChessPiece[]> {
     }
 
     public boolean movePiece(String move, Player player) {
-        String[] moves = move.split("-");
-        ChessPiece a = getPiece(new Coordinates(moves[0]));
-        if (a == null) throw new InvalidMovementException("no piece located");
-        if(!a.getPlayer().equals(player)) throw new InvalidMovementException("Cannot move other players pieces");
-        Coordinates aPos = a.getLocation();
-        if(a.move(this, new Coordinates(moves[1]))) {
-            board[aPos.getY()][aPos.getX()] = null;
-            board[a.getLocation().getY()][a.getLocation().getX()] = a;
-            return true;
+        String[] moves;
+        if (move.matches("([a-h][1-8]-[a-h][1-8])$")) {
+            moves = move.split("-");
+            ChessPiece a = getPiece(new Coordinates(moves[0]));
+            ChessPiece b = getPiece(new Coordinates(moves[1]));
+            if (a == null) throw new InvalidMovementException("no piece located");
+            if(!a.getPlayer().equals(player)) throw new InvalidMovementException("Cannot move other players pieces");
+            Coordinates aPos = a.getLocation();
+            King king = null;
+            if (a.getPieceType().equals(PieceType.KING)) {
+                king = (King) a;
+            } else if (b != null && b.getPieceType().equals(PieceType.KING)) {
+                king = (King) b;
+            }
+            if(a.move(this, new Coordinates(moves[1])) || (king != null && king.castle(this, new Coordinates(moves[1])))) {
+                board[aPos.getY()][aPos.getX()] = king == null ? null : b;
+                board[a.getLocation().getY()][a.getLocation().getX()] = a;
+                return true;
+            }
         }
         return false;
     }
