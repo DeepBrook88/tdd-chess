@@ -49,11 +49,15 @@ public class King extends ChessPiece{
     }
 
     public boolean canCastle(Chessboard chessboard, Coordinates destination) {
+        boolean threatenedPos = false;
+        int direction = location.getX() - destination.getX() > 0 ? -1 : 1;
+        for (int i = 0; i <= Math.abs(location.getX() - destination.getX()); i++) {
+            if (destinationIsThreatened(chessboard, new Coordinates(location.getX() + i * direction, location.getY()))) threatenedPos = true;
+        }
         return chessboard.getPiece(destination) != null
                 && chessboard.getPiece(destination).pieceType.equals(PieceType.ROOK)
                 && !hasMoved && !chessboard.getPiece(destination).hasMoved
-                && !destinationIsThreatened(chessboard, destination)
-                && !destinationIsThreatened(chessboard, location);
+                && !threatenedPos;
     }
 
     private boolean destinationIsThreatened(Chessboard chessboard, Coordinates destination) {
@@ -80,7 +84,9 @@ public class King extends ChessPiece{
         List<ChessPiece> pieces = new ArrayList<>();
         for (ChessPiece[] chessPieces : chessboard) {
             for (ChessPiece chessPiece : chessPieces) {
-                if (chessPiece != null && !chessPiece.player.equals(getPlayer()) && !chessPiece.pieceType.equals(PieceType.PAWN)) pieces.add(chessPiece);
+                if (chessPiece != null && !chessPiece.player.equals(getPlayer())
+                        && !chessPiece.pieceType.equals(PieceType.PAWN)
+                        && !chessPiece.pieceType.equals(PieceType.KING)) pieces.add(chessPiece);
             }
         }
         for (ChessPiece piece : pieces) {
@@ -89,13 +95,4 @@ public class King extends ChessPiece{
         return false;
     }
 
-    public boolean isThreatened(Chessboard chessboard) {
-        List<ChessPiece> pieces = new ArrayList<>();
-        for (ChessPiece[] chessPieces : chessboard) {
-            for (ChessPiece chessPiece : chessPieces) {
-                if (chessPiece != null && !chessPiece.player.equals(getPlayer()) && !chessPiece.pieceType.equals(PieceType.PAWN)) pieces.add(chessPiece);
-            }
-        }
-        return false;
-    }
 }
