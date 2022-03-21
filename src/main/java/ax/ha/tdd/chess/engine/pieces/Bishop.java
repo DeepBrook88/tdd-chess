@@ -17,7 +17,7 @@ public class Bishop extends ChessPiece{
 
     @Override
     public boolean move(Chessboard chessboard, Coordinates destination) {
-        if (canMove(chessboard, destination)) {
+        if (canMove(chessboard, destination) && !canThreatenKing(chessboard, destination)) {
             location = destination;
             hasMoved = true;
             return true;
@@ -36,7 +36,6 @@ public class Bishop extends ChessPiece{
                     new Coordinates(getLocation().getX() + i * xDirection, getLocation().getY() + i * yDirection)
             ) != null) return false;
         }
-        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
-        return xDiff == yDiff && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer()) && !kingIsPresent;
+        return xDiff == yDiff && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer());
     }
 }

@@ -16,7 +16,7 @@ public class Queen extends ChessPiece{
 
     @Override
     public boolean move(Chessboard chessboard, Coordinates destination) {
-        if (canMove(chessboard, destination)) {
+        if (canMove(chessboard, destination) && !canThreatenKing(chessboard, destination)) {
             location = destination;
             hasMoved = true;
             return true;
@@ -28,7 +28,6 @@ public class Queen extends ChessPiece{
     public boolean canMove(Chessboard chessboard, Coordinates destination) {
         Bishop b = new Bishop(this.pieceType, this.player, this.location);
         Rook r = new Rook(this.pieceType, this.player, this.location);
-        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
-        return (b.canMove(chessboard,destination) || r.canMove(chessboard,destination)) && !kingIsPresent;
+        return (b.canMove(chessboard,destination) || r.canMove(chessboard,destination));
     }
 }

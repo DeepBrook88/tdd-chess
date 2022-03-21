@@ -17,7 +17,7 @@ public class Knight extends ChessPiece{
 
     @Override
     public boolean move(Chessboard chessboard, Coordinates destination) {
-        if (canMove(chessboard, destination)) {
+        if (canMove(chessboard, destination) && !canThreatenKing(chessboard, destination)) {
             location = destination;
             hasMoved = true;
             return true;
@@ -31,7 +31,6 @@ public class Knight extends ChessPiece{
         int yPos = getLocation().getY();
         int destXPos = destination.getX();
         int destYPos = destination.getY();
-        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
         return (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer())
                 && (xPos + 2 == destXPos && yPos + 1 == destYPos ||
                 xPos + 2 == destXPos && yPos - 1 == destYPos ||
@@ -40,6 +39,6 @@ public class Knight extends ChessPiece{
                 xPos - 2 == destXPos && yPos + 1 == destYPos ||
                 xPos - 2 == destXPos && yPos - 1 == destYPos ||
                 xPos - 1 == destXPos && yPos + 2 == destYPos ||
-                xPos - 1 == destXPos && yPos - 2 == destYPos) && !kingIsPresent;
+                xPos - 1 == destXPos && yPos - 2 == destYPos);
     }
 }

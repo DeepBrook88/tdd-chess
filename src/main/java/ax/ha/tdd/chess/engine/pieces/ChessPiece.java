@@ -40,6 +40,11 @@ public abstract class ChessPiece {
         return x >= 0 && x <= 7 && y >= 0 && y <= 7;
     }
 
+    public boolean canThreatenKing(Chessboard chessboard, Coordinates destination) {
+        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
+        return canMove(chessboard, destination) && kingIsPresent;
+    }
+
     /**
      * Suggestion of design:
      * Checks if the chessPiece can move to a certain destination.

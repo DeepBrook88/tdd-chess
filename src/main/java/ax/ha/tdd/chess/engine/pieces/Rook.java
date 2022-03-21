@@ -17,7 +17,7 @@ public class Rook extends ChessPiece{
 
     @Override
     public boolean move(Chessboard chessboard, Coordinates destination) {
-        if (canMove(chessboard, destination)) {
+        if (canMove(chessboard, destination) && !canThreatenKing(chessboard, destination)) {
             location = destination;
             hasMoved = true;
             return true;
@@ -41,7 +41,7 @@ public class Rook extends ChessPiece{
                     new Coordinates(getLocation().getX(), getLocation().getY() + i * yDirection)
             ) != null) return false;
         }
-        boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
-        return straightLine && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer()) && !kingIsPresent;
+        //boolean kingIsPresent = chessboard.getPiece(destination) != null && chessboard.getPiece(destination).pieceType.equals(PieceType.KING);
+        return straightLine && (chessboard.getPiece(destination) == null || chessboard.getPiece(destination).getPlayer() != getPlayer()) /*&& !kingIsPresent*/;
     }
 }

@@ -53,6 +53,18 @@ public class CastlingTest {
         board.movePiece("e8-a2", Player.BLACK);
         assertEquals(new Coordinates("e8"),blackKing.getLocation());
         assertEquals(new Coordinates("a2"),blackRook.getLocation());
+    }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"a1","e1"})
+    void invalidCastlingKingOrRookIsThreatened(String move) {
+        King blackKing = new King(PieceType.KING, Player.BLACK, new Coordinates("e8"));
+        Rook blackRook = new Rook(PieceType.ROOK, Player.BLACK, new Coordinates("a8"));
+        Rook whiteRook = new Rook(PieceType.ROOK, Player.WHITE, new Coordinates(move));
+        board.addPiece(blackKing);
+        board.addPiece(blackRook);
+        board.addPiece(whiteRook);
+        board.movePiece("e8-a8", Player.BLACK);
+        assertEquals(new Coordinates("e8"),blackKing.getLocation());
     }
 }
