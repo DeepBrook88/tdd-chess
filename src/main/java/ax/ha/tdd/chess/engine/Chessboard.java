@@ -34,7 +34,7 @@ public class Chessboard implements Iterable<ChessPiece[]> {
 
     public boolean movePiece(String move, Player player) {
         String[] moves;
-        if (move.matches("([a-h][1-8]-[a-h][1-8])$")) {
+        if (move.matches("^([a-hA-H][1-8]-[a-hA-H][1-8])$")) {
             moves = move.split("-");
             ChessPiece a = getPiece(new Coordinates(moves[0]));
             ChessPiece b = getPiece(new Coordinates(moves[1]));

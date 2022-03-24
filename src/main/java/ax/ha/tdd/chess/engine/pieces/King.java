@@ -60,6 +60,18 @@ public class King extends ChessPiece{
                 && !threatenedPos;
     }
 
+    public boolean canEscape(Chessboard chessboard) {
+        int[] xOffsets = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] yOffsets = {-1, -1, -1, 0, 0, 1, 1, 1};
+        for (int i = 0; i < 8; i++) {
+            if (isInBounds(location.getX() + xOffsets[i], location.getY() + yOffsets[i])
+                    && canMove(chessboard, new Coordinates(location.getX() + xOffsets[i], location.getY() + yOffsets[i]))){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean destinationIsThreatened(Chessboard chessboard, Coordinates destination) {
         // Against the other King
         int[] xOffsets = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -77,7 +89,7 @@ public class King extends ChessPiece{
                 chessboard.getPiece(new Coordinates(destination.getX()-1, destination.getY()+pawnDirection)) : null;
         ChessPiece p2 = isInBounds(destination.getX()+1, destination.getY()+pawnDirection) ?
                 chessboard.getPiece(new Coordinates(destination.getX()+1, destination.getY()+pawnDirection)) : null;
-        if (p1 != null && p1.pieceType.equals(PieceType.PAWN) || p2 != null && p2.pieceType.equals(PieceType.PAWN)) {
+        if (p1 != null && p1.pieceType.equals(PieceType.PAWN) && !p1.player.equals(getPlayer()) || p2 != null && p2.pieceType.equals(PieceType.PAWN) && !p2.player.equals(getPlayer())) {
             return true;
         }
         // Against all other pieces
