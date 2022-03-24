@@ -42,13 +42,25 @@ public class Chessboard implements Iterable<ChessPiece[]> {
             if(!a.getPlayer().equals(player)) throw new InvalidMovementException("Cannot move other players pieces");
             Coordinates aPos = a.getLocation();
             King king = null;
+            ChessPiece target = null;
             if (a.getPieceType().equals(PieceType.KING)) {
                 king = (King) a;
+                target = b;
             } else if (b != null && b.getPieceType().equals(PieceType.KING)) {
                 king = (King) b;
+                target = a;
             }
-            if(a.move(this, new Coordinates(moves[1])) || (king != null && king.castle(this, new Coordinates(moves[1])))) {
-                board[aPos.getY()][aPos.getX()] = king == null ? null : b;
+            boolean castled;
+            if (king != null && target != null) {
+                castled = king.castle(this, new Coordinates(moves[1]));
+                if (castled) {
+                    board[aPos.getY()][aPos.getX()] = target;
+                    board[a.getLocation().getY()][a.getLocation().getX()] = king;
+                    return true;
+                }
+            }
+            if(a.move(this, new Coordinates(moves[1]))) {
+                board[aPos.getY()][aPos.getX()] = null;
                 board[a.getLocation().getY()][a.getLocation().getX()] = a;
                 return true;
             }
