@@ -52,10 +52,10 @@ public class Chessboard implements Iterable<ChessPiece[]> {
             }
             boolean castled;
             if (king != null && target != null) {
-                castled = king.castle(this, new Coordinates(moves[1]));
+                castled = king.castle(this, new Coordinates(b.equals(king) ? moves[0] : moves[1]));
                 if (castled) {
-                    board[aPos.getY()][aPos.getX()] = target;
-                    board[a.getLocation().getY()][a.getLocation().getX()] = king;
+                    board[aPos.getY()][aPos.getX()] = b.equals(king) ? king : target;
+                    board[a.getLocation().getY()][a.getLocation().getX()] = b.equals(king) ? target : king;
                     return true;
                 }
             }
