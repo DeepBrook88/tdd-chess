@@ -32,13 +32,15 @@ public class Game {
     public void move(String move) {
         isNewGame = false;
         try {
-            System.out.println("Player " + getPlayerToMove().getSymbol() + " tried to perform move: " + move);
-            successfulMove = board.movePiece(move, getPlayerToMove());
-            turn += successfulMove ? 1 : 0;
-            lastMove = move;
-            WinningState state = WinningConditionChecker.checkState(board,getPlayerToMove());
-            lastMove += state.equals(WinningState.CHECK) ? " CHECK" : "";
-            lastMove += state.equals(WinningState.CHECKMATE) ? " CHECKMATE" : "";
+            if (!WinningConditionChecker.checkState(board, getPlayerToMove()).equals(WinningState.CHECKMATE)) {
+                System.out.println("Player " + getPlayerToMove().getSymbol() + " tried to perform move: " + move);
+                successfulMove = board.movePiece(move, getPlayerToMove());
+                turn += successfulMove ? 1 : 0;
+                lastMove = move;
+                WinningState state = WinningConditionChecker.checkState(board,getPlayerToMove());
+                lastMove += state.equals(WinningState.CHECK) ? " CHECK" : "";
+                lastMove += state.equals(WinningState.CHECKMATE) ? " CHECKMATE" : "";
+            }
         } catch (Exception e) {
             successfulMove = false;
             lastMove = e.getMessage();
